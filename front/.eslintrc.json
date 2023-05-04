@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "standard-with-typescript"
+    ],
+    "overrides": [
+    ],
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/promise-function-async": "off",
+        "@typescript-eslint/consistent-type-imports": "off"
+    },
+    "parserOptions": {
+        "project": ["tsconfig.json"],
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    }
+
+}
