@@ -1,7 +1,7 @@
 package com.kb.igClone.mapper;
 
 import com.kb.igClone.bean.NewUser;
-import com.kb.igClone.model.User;
+import com.kb.igClone.model.sql.User;
 import org.mapstruct.Mapper;
 
 @Mapper

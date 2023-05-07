@@ -8,4 +8,5 @@
     <include file="dbchangelog-1.xml" relativeToChangelogFile="true" />
     <include file="dbchangelog-2.xml" relativeToChangelogFile="true" />
     <include file="dbchangelog-3.xml" relativeToChangelogFile="true" />
+    <include file="dbchangelog-4.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>

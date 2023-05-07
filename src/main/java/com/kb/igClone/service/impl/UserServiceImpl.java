@@ -4,13 +4,14 @@ import com.kb.igClone.bean.NewUser;
 import com.kb.igClone.exception.UserExistException;
 import com.kb.igClone.mapper.NewUserToUserMapper;
 import com.kb.igClone.mapper.NewUserToUserMapperImpl;
-import com.kb.igClone.model.User;
-import com.kb.igClone.repository.UserRepository;
+import com.kb.igClone.model.sql.User;
+import com.kb.igClone.repository.sql.UserRepository;
 import com.kb.igClone.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -35,5 +36,19 @@ public class UserServiceImpl implements UserService {
         User save = userRepository.save(newUser);
         log.info("Created user with login: {}", newUser.getLogin());
         return save;
+    }
+
+    @Override
+    public User findUser(String login) {
+        return userRepository.findByLogin(login);
+    }
+
+    public Optional<User> findUser(Long id){
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public Boolean userExist(String login) {
+        return userRepository.existsByLogin(login);
     }
 }

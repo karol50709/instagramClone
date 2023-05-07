@@ -1,7 +1,7 @@
-package com.kb.igClone.repository;
+package com.kb.igClone.repository.sql;
 
-import com.kb.igClone.model.Follow;
-import com.kb.igClone.model.User;
+import com.kb.igClone.model.sql.Follow;
+import com.kb.igClone.model.sql.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="4" author="karol">
+        <createTable tableName="post">
+            <column name="post_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="post_pk"/>
+            </column>
+            <column name="description" type="varchar(500)">
+                <constraints nullable="false" />
+            </column>
+            <column name="post_user_id" type="bigint">
+                <constraints foreignKeyName="person_pk" references="user(user_id)" nullable="false" />
+            </column>
+            <column name="creation_time" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_mongo_id" type="varchar(128)">
+                <constraints nullable="false" />
+            </column>
+            <column name="thumbnail_mongo_id" type="varchar(128)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

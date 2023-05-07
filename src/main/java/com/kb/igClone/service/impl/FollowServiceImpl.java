@@ -2,11 +2,11 @@ package com.kb.igClone.service.impl;
 
 import com.kb.igClone.bean.FollowBean;
 import com.kb.igClone.exception.UserNotFoundException;
-import com.kb.igClone.model.Follow;
-import com.kb.igClone.model.User;
-import com.kb.igClone.repository.FollowRepository;
-import com.kb.igClone.repository.UserRepository;
+import com.kb.igClone.model.sql.Follow;
+import com.kb.igClone.model.sql.User;
+import com.kb.igClone.repository.sql.FollowRepository;
 import com.kb.igClone.service.FollowService;
+import com.kb.igClone.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,23 +20,23 @@ import java.util.stream.Collectors;
 public class FollowServiceImpl implements FollowService {
 
     private final FollowRepository followRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public FollowServiceImpl(FollowRepository followRepository,
-                             UserRepository userRepository) {
+                             UserService userService) {
         this.followRepository = followRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 
     @Override
     public Boolean createFollow(FollowBean followBean) {
-        User watcher = userRepository.findByLogin(followBean.getWatcher());
+        User watcher = userService.findUser(followBean.getWatcher());
         if(watcher == null){
             log.error("Watcher: {} not found", followBean.getWatcher());
             throw new UserNotFoundException(String.format("Watcher: %s not found", followBean.getWatcher()));
         }
-        User followedUser = userRepository.findByLogin(followBean.getFollowed());
+        User followedUser = userService.findUser(followBean.getFollowed());
         if(followedUser == null) {
             log.error("Followed account: {} not found", followBean.getFollowed());
             throw new UserNotFoundException(String.format("Followed account: %s not found", followBean.getWatcher()));
@@ -51,15 +51,15 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public List<String> getFollowers(String login) {
-        User user = userRepository.findByLogin(login);
-        if(user == null) {
+        User user = userService.findUser(login);
+        if (user == null) {
             log.error("Followed account: {} not found", login);
             throw new UserNotFoundException(String.format("Followed account: %s not found", login));
         }
         List<String> followersLogins = user.getFollows()
                 .stream()
                 .map(Follow::getFollowedUserId)
-                .map(userRepository::findById)
+                .map(userService::findUser)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(User::getLogin)
@@ -69,12 +69,12 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public Boolean unfollow(FollowBean followBean) {
-        User watcher = userRepository.findByLogin(followBean.getWatcher());
+        User watcher = userService.findUser(followBean.getWatcher());
         if(watcher == null){
             log.error("Watcher: {} not found", followBean.getWatcher());
             throw new UserNotFoundException(String.format("Watcher: %s not found", followBean.getWatcher()));
         }
-        User followedUser = userRepository.findByLogin(followBean.getFollowed());
+        User followedUser = userService.findUser(followBean.getFollowed());
         if(followedUser == null) {
             log.error("Followed account: {} not found", followBean.getFollowed());
             throw new UserNotFoundException(String.format("Followed account: %s not found", followBean.getWatcher()));
